@@ -8,6 +8,27 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
+/**
+ * <!-- globalinfo-start --> Counts the number of dipeptides in a protein sequence.
+ * Optionally scales counts to sum to unity.
+ * <p>
+ * <!-- globalinfo-end -->
+ * 
+ * <!-- options-start --> Valid options are:
+ * <pre>
+ * -R &lt;index&gt;
+ *  Sets the index of the string attribute.
+ * </pre>
+ * 
+ * <pre>
+ * -S
+ *  Scales the counts so that they sum to unity.
+ * </pre>
+ * <!-- options-end -->
+ * 
+ * @author danielhogan
+ * @version $revision$
+ */
 public class DipeptideCountFilter extends AminoAcidFilter {
 	private static final long serialVersionUID = -3796038204492101327L;
 

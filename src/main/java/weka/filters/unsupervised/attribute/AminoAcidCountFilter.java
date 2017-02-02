@@ -7,6 +7,27 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
+/**
+ * <!-- globalinfo-start --> Counts the amino acids in a protein sequence. 
+ * Optionally scales counts to unit sum.
+ * <p>
+ * <!-- globalinfo-end -->
+ * 
+ * <!-- options-start --> Valid options are:
+ * <pre>
+ * -R &lt;index&gt;
+ *  Sets the index of the string attribute.
+ * </pre>
+ * 
+ * <pre>
+ * -S
+ *  Scales counts to sum to unity.
+ * </pre>
+ * <!-- options-end -->
+ * 
+ * @author danielhogan
+ * @version $Revision$
+ */
 public class AminoAcidCountFilter extends AminoAcidFilter {
 	private static final long serialVersionUID = 8367780873661135860L;
 
