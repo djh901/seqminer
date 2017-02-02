@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>seqminer</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>test</name>
+			<type>2</type>
+			<location>/Users/danielhogan/workspace/weka-src-3.8/src/test/java</location>
+		</link>
+		<link>
+			<name>weka</name>
+			<type>2</type>
+			<location>/Users/danielhogan/workspace/weka-src-3.8/src/test/java/weka</location>
+		</link>
+	</linkedResources>
+</projectDescription>
