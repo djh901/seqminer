@@ -7,7 +7,7 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
-public class KideraFactorFilter extends AminoAcidFilter {
+public class KideraFactors extends AminoAcidFilter {
 	private static final long serialVersionUID = 7569364579668558625L;
 
 	public static int nKideraFactors = 10;
@@ -50,7 +50,7 @@ public class KideraFactorFilter extends AminoAcidFilter {
 		String sequence = instance.stringValue(attrIndex.getIndex());
 		int sequenceLength = sequence.length();
 		for (int i = 0; i < sequenceLength; i++) {
-			int baseIndex = AminoAcidCountFilter.baseMap.get(sequence.charAt(i));
+			int baseIndex = AminoAcidCounts.baseMap.get(sequence.charAt(i));
 			for (int j = 0; j < scores.length; j++) {
 				scores[j] += kideraFactors[baseIndex][j];
 			}

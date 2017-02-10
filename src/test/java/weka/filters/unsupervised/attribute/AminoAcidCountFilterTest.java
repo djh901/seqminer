@@ -13,7 +13,7 @@ public class AminoAcidCountFilterTest extends AminoAcidFilterTest {
 
 	@Override
 	public Filter getFilter() {
-		AminoAcidFilter filter = new AminoAcidCountFilter();
+		AminoAcidFilter filter = new AminoAcidCounts();
 		return filter;
 	}
 	

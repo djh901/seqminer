@@ -29,7 +29,7 @@ import weka.core.Instances;
  * @author danielhogan
  * @version $revision$
  */
-public class DipeptideCountFilter extends AminoAcidFilter {
+public class DipeptideCounts extends AminoAcidFilter {
 	private static final long serialVersionUID = -3796038204492101327L;
 
 	public static LinkedHashMap<String,Integer> dipeptide2Int = new LinkedHashMap<String,Integer>();
