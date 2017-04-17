@@ -1,1 +1,0 @@
-EnumMap<String,Integer> map = new EnumMap<String,Integer>();

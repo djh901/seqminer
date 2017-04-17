@@ -1,27 +1,28 @@
 package weka.filters.unsupervised.attribute;
 
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 import weka.core.Instances;
 import weka.filters.Filter;
 
-public class KideraFactorFilterTest extends AminoAcidFilterTest {
+public class KideraFactorTest extends AminoAcidFilterTest {
 
-	public KideraFactorFilterTest(String name) {
+	public KideraFactorTest(String name) {
 		super(name);
 	}
 
 	@Override
 	public Filter getFilter() {
-		KideraFactorFilter filter = new KideraFactorFilter();
+		KideraFactors filter = new KideraFactors();
 		return filter;
 	}
 	
 	public void testTypical() {
 		Instances result = useFilter();
 		System.out.println(result.toString());
-		assertEquals(result.numAttributes(), m_Instances.numAttributes() + KideraFactorFilter.nKideraFactors);
+		assertEquals(result.numAttributes(), m_Instances.numAttributes() + KideraFactors.nKideraFactors);
 		
 		// 4th Kidera factor for 1st sequence
 		double kid4 = 1.17 + -0.73 + 0.28 + -1.57 + 0.81 + -1.10 + -0.40 + 0.28 + 0.63 + 1.10 + 0.81 + -0.56 + -0.56 + -0.75 + -0.27 + -0.40 + -0.77 + -1.43 + -1.10 + -0.77;
@@ -47,7 +48,7 @@ public class KideraFactorFilterTest extends AminoAcidFilterTest {
 	}
 
 	public static Test suite() {
-		return new TestSuite(KideraFactorFilterTest.class);
+		return new TestSuite(KideraFactorTest.class);
 	}
 
 	public static void main(String[] args) {

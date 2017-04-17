@@ -28,7 +28,7 @@ import weka.core.Instances;
  * @author danielhogan
  * @version $Revision$
  */
-public class AminoAcidCountFilter extends AminoAcidFilter {
+public class AminoAcidCounts extends AminoAcidFilter {
 	private static final long serialVersionUID = 8367780873661135860L;
 
 	@Override
