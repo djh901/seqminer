@@ -1,14 +1,15 @@
 package weka.filters.unsupervised.attribute;
 
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 import weka.core.Instances;
 import weka.filters.Filter;
 
-public class KideraFactorFilterTest extends AminoAcidFilterTest {
+public class KideraFactorTest extends AminoAcidFilterTest {
 
-	public KideraFactorFilterTest(String name) {
+	public KideraFactorTest(String name) {
 		super(name);
 	}
 
@@ -47,7 +48,7 @@ public class KideraFactorFilterTest extends AminoAcidFilterTest {
 	}
 
 	public static Test suite() {
-		return new TestSuite(KideraFactorFilterTest.class);
+		return new TestSuite(KideraFactorTest.class);
 	}
 
 	public static void main(String[] args) {

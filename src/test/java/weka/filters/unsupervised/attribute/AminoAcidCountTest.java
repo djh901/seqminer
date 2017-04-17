@@ -6,8 +6,8 @@ import junit.textui.TestRunner;
 import weka.core.Instances;
 import weka.filters.Filter;
 
-public class AminoAcidCountFilterTest extends AminoAcidFilterTest {
-	public AminoAcidCountFilterTest(String name) {
+public class AminoAcidCountTest extends AminoAcidFilterTest {
+	public AminoAcidCountTest(String name) {
 		super(name);
 	}
 
@@ -39,7 +39,7 @@ public class AminoAcidCountFilterTest extends AminoAcidFilterTest {
 	}
 
 	public static Test suite() {
-		return new TestSuite(AminoAcidCountFilterTest.class);
+		return new TestSuite(AminoAcidCountTest.class);
 	}
 	
 	public static void main(String[] args) {

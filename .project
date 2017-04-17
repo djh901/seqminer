@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>seqminer</name>
-	<comment></comment>
+	<name>seqminer2</name>
+	<comment>Project seqminer2 created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -11,25 +11,36 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
 	<linkedResources>
 		<link>
-			<name>test</name>
-			<type>2</type>
-			<location>/Users/danielhogan/workspace/weka-src-3.8/src/test/java</location>
-		</link>
-		<link>
 			<name>weka</name>
 			<type>2</type>
-			<location>/Users/danielhogan/workspace/weka-src-3.8/src/test/java/weka</location>
+			<location>/Users/danielhogan/workspace/weka-3-8-1/src/test/java/weka</location>
+		</link>
+		<link>
+			<name>weka-test</name>
+			<type>2</type>
+			<location>/Users/danielhogan/workspace/weka-3-8-1/src/test/java</location>
 		</link>
 	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1486750327752</id>
+			<name></name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-src/test/java</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
