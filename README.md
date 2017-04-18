@@ -6,15 +6,15 @@ SeqMiner is a Weka package that adds filters for extracting numeric features fro
 2. Amino acid counts
 3. Dipeptide counts
 
-## Documentation
-The Javadoc for this project is here: 
-
 ## Installation
 ### Requirements
 * Weka 3.8.0 (other versions are untested)
 
 ### Steps
-* Install
+Use the Weka package manager that comes with Weka for installing SeqMiner. Point the package manager to the following URL: https://github.com/djhogan/Weka-SeqMiner.zip (Link Broken)
+
+## Documentation
+The Javadoc for this project is here: 
 
 ## Examples
 [RECOMB2017](https://github.com/djhogan/RECOMB2017)
