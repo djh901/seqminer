@@ -27,6 +27,15 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+sourceSets {
+    test {
+        java {
+            srcDirs 'src'
+            srcDirs 'weka-src'
+        }
+    }
+}
+
 task zipDist(type: Zip) {
 	dependsOn jar	
     from "${project.projectDir}", "build/libs"

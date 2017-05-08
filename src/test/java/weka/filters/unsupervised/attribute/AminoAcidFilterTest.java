@@ -1,6 +1,5 @@
 package weka.filters.unsupervised.attribute;
 
-
 import weka.classifiers.meta.FilteredClassifier;
 import weka.classifiers.rules.ZeroR;
 import weka.core.Instances;
