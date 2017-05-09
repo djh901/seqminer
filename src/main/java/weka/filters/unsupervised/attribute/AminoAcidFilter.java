@@ -28,28 +28,10 @@ public abstract class AminoAcidFilter extends SimpleStreamFilter {
 		}
 	}
 
-	protected SingleIndex attrIndex = new SingleIndex("last");
 	protected boolean scaleFlag = false;
 
 	public AminoAcidFilter() {
 		super();
-	}
-
-	public Capabilities getCapabilities() {
-		Capabilities result = super.getCapabilities();
-		result.enableAllAttributes();
-		result.enableAllClasses();
-		result.enable(Capability.NO_CLASS);  //// filter doesn't need class to be set//
-		return result;
-	}
-
-	@OptionMetadata(displayName = "Attribute index", description = "Index of string attribute.", commandLineParamName = "R", commandLineParamSynopsis = "-R <index>", displayOrder = 1)
-	public String getAttributeIndex() {
-		return attrIndex.getSingleIndex();
-	}
-
-	public void setAttributeIndex(String index) {
-		attrIndex.setSingleIndex(index);
 	}
 
 	@OptionMetadata(displayName = "Scale", description = "Whether to scale to unit sum.", commandLineParamName = "S", commandLineParamSynopsis = "-S", commandLineParamIsFlag = true, displayOrder = 2)
@@ -64,10 +46,6 @@ public abstract class AminoAcidFilter extends SimpleStreamFilter {
 	@Override
 	public Enumeration<Option> listOptions() {
 		Vector<Option> result = new Vector<Option>();
-		
-		result.addElement(new Option(
-				"\tSet the index of the string attribute.", "C", 1,
-				"-R <index>"));
 		result.addElement(new Option(
 				"\tSet whether to scale to unit sum.", "S", 0, 
 				"-S"));
@@ -77,40 +55,23 @@ public abstract class AminoAcidFilter extends SimpleStreamFilter {
 	@Override
 	public String[] getOptions() {
 		Vector<String> options = new Vector<String>();
-	
-	    options.add("-R");
-	    options.add("" + getAttributeIndex());
 	    if (getScaleFlag()) {
 			options.add("-S");
 	    }
-	
 	    return options.toArray(new String[0]);
 	}
 
 	@Override
 	public void setOptions(String[] options) throws Exception {
 	    String attIndex = Utils.getOption('R', options);
-	    if (attIndex.length() != 0) {
-	      setAttributeIndex(attIndex);
-	    } else {
-	      setAttributeIndex("last");
-	    }
-	    
 	    if (Utils.getFlag('S', options)) {
 			setScaleFlag(true);
 	    } else {
 	    	setScaleFlag(false);
 	    }
-	    
 	    Utils.checkForRemainingOptions(options);
 	}
 
-	@Override
-	public String globalInfo() {
-		return "A test stream filter.";
-	}
-
-	abstract protected Instances prepareOutputFormat(Instances instances) throws Exception; 
 	abstract protected Instance processInstance(Instance instance) throws Exception;
 
 	@Override

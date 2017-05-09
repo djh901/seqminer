@@ -37,63 +37,14 @@ import weka.core.Utils;
  * @author danielhogan
  * @version $Revision$
  */
-public class SlidingWindow extends SimpleBatchFilter {
-	private static final long serialVersionUID = 8367780873661135860L;
-
-	protected SingleIndex attrIndex = new SingleIndex("last");
-
-    public Capabilities getCapabilities() {
-        Capabilities result = super.getCapabilities();
-        result.enableAllAttributes();
-        result.enableAllClasses();
-        result.enable(Capability.NO_CLASS);
-        return result;
-    }
-
-	@OptionMetadata(displayName = "Attribute index", description = "Index of string attribute.", commandLineParamName = "R", commandLineParamSynopsis = "-R <index>", displayOrder = 1)
-	public String getAttributeIndex() {
-		return attrIndex.getSingleIndex();
-	}
-
-	public void setAttributeIndex(String index) {
-		attrIndex.setSingleIndex(index);
-	}
-
-	@Override
-	public Enumeration<Option> listOptions() {
-		Vector<Option> result = new Vector<Option>();
-		result.addElement(new Option(
-				"\tSet the index of the string attribute.", "C", 1,
-				"-R <index>"));
-		return super.listOptions();
-	}
-
-	@Override
-	public String[] getOptions() {
-		Vector<String> options = new Vector<String>();
-	    options.add("-R");
-	    options.add("" + getAttributeIndex());
-	    return options.toArray(new String[0]);
-	}
-
-	@Override
-	public void setOptions(String[] options) throws Exception {
-	    String attIndex = Utils.getOption('R', options);
-	    if (attIndex.length() != 0) {
-	      setAttributeIndex(attIndex);
-	    } else {
-	      setAttributeIndex("last");
-	    }
-	    Utils.checkForRemainingOptions(options);
-	}
-
+public class SlidingWindow extends ProteinFilter {
     @Override
     public String globalInfo() {
         return "A sliding window filter.";
     }
 
 	@Override
-	protected Instances determineOutputFormat(Instances inputFormat) throws Exception {
+	protected Instances prepareOutputFormat(Instances inputFormat) throws Exception {
 		attrIndex.setUpper(inputFormat.numAttributes() - 1);
 		int seqAttrIndex = attrIndex.getIndex();
 		if (!inputFormat.attribute(seqAttrIndex).isString()) {
