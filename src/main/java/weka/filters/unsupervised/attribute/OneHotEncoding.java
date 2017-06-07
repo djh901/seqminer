@@ -42,6 +42,8 @@ import weka.core.Utils;
 public class OneHotEncoding extends ProteinFilter {
   private static final long serialVersionUID = 1L;
 
+  protected int stringLength = -1;
+
   @Override
   public String globalInfo() {
     return "A one-hot encoding filter.";
@@ -54,21 +56,29 @@ public class OneHotEncoding extends ProteinFilter {
     if (!inputFormat.attribute(seqAttrIndex).isString()) {
       throw new Exception("Specified attribute index (" + seqAttrIndex + ") must be string type.");
     }
-    strLength = -1;
-    seqAttribute = inputFormat.attribute(seqAttrIndex);
+
+    Attribute seqAttribute = inputFormat.attribute(seqAttrIndex);
     for (int i = 0; i < seqAttribute.numValues(); i++) {
-      if (strLength < 0) { strLength = seqAttribute.value(i).length }
-      if (seqAttribute.value(i).length != strLength) {
+      if (stringLength < 0) { stringLength = seqAttribute.value(i).length(); }
+      if (seqAttribute.value(i).length() != stringLength) {
         throw new Exception("All strings must have the same length.");
       }
     }
-    return inputFormat;
+
+    Instances outputFormat = new Instances(inputFormat, 0);
+    for (int i = 0; i < stringLength; i++) {
+      for (int j = 0; j < 20; j++) {
+        outputFormat.insertAttributeAt(new Attribute(Integer.toString(20 * i + j)), outputFormat.numAttributes());
+      }
+    }
+    return outputFormat;
   }
 
   @Override
   protected Instances process(Instances instances) throws Exception {
-    Instances output = new Instances(instances, instances.numInstances());
-    double[] vals = new double[instances.numAttributes()];
+    Instances output = prepareOutputFormat(instances);
+    double[] vals = new double[output.numAttributes()];
+
     for (int i = 0; i < instances.numInstances(); i++) {
       String sequence = instances.get(i).toString(attrIndex.getIndex());
       for (int j = 0; j < instances.numAttributes(); j++) {
@@ -79,14 +89,20 @@ public class OneHotEncoding extends ProteinFilter {
           vals[j] = instances.get(i).value(j);    
         }
       }
-      for (int j = 0; j < sequence.length() - (getWindowWidth()-1); j++) {
-        String substr = sequence.substring(j, j+(getWindowWidth()));
-        vals[attrIndex.getIndex()] = output.attribute(attrIndex.getIndex()).addStringValue(substr);
-        double[] valsCopy = new double[vals.length];
-        System.arraycopy(vals, 0, valsCopy, 0, vals.length);
-        output.add(new DenseInstance(1.0, valsCopy));
+      for (int pos = 0; pos < sequence.length(); pos++) {
+        for (int baseIdx = 0; baseIdx < 20; baseIdx++) {
+          if (sequence.charAt(pos) == AminoAcidFilter.bases[baseIdx]) {
+             vals[instances.numAttributes() + ((20 * pos) + baseIdx)] = 1;
+          } else {
+             vals[instances.numAttributes() + ((20 * pos) + baseIdx)] = 0; 
+          }
+        }
       }
+      Instance obj = new DenseInstance(1.0, vals);
+      output.add(new DenseInstance(1.0, vals));
+      vals = new double[output.numAttributes()];
     }
+
     return output;
   }
 }

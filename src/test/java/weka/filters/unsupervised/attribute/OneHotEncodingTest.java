@@ -54,8 +54,8 @@ public class OneHotEncodingTest extends AbstractFilterTest {
     data.add(new DenseInstance(1.0, vals));
     m_Instances = data;
 
-		((OneHotEncoding) m_Filter).setAttributeIndex("2");
-	}
+    ((OneHotEncoding) m_Filter).setAttributeIndex("2");
+  }
 
   @Override
   public Filter getFilter() {
@@ -65,11 +65,14 @@ public class OneHotEncodingTest extends AbstractFilterTest {
 
   public void testDefault() {
     Instances result = useFilter();
-    assertEquals(result.numInstances(), 12);
-    assertEquals(result.numAttributes(), m_Instances.numAttributes());
-    assertEquals(result.get(0).toString(1), "YTA");
-    assertEquals(result.get(2).toString(1), "AVW");
-    assertEquals(result.get(10).toString(1), "AYY");
+    assertEquals(result.numInstances(), 2);
+    assertEquals(result.numAttributes(), 103);
+    assertEquals(1.0, result.get(0).value(3));
+    assertEquals(0.0, result.get(0).value(4));
+    assertEquals(1.0, result.get(1).value(102));
+    assertEquals(1.0, result.get(1).value(81));
+    assertEquals(0.0, result.get(1).value(80));
+    assertEquals(0.0, result.get(1).value(82));
   }
 
   public static Test suite() {
