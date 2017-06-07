@@ -14,8 +14,8 @@ import weka.core.TestInstances;
 import weka.filters.AbstractFilterTest;
 import weka.filters.Filter;
 
-public class SlidingWindowTest extends AbstractFilterTest {
-  public SlidingWindowTest(String name) {
+public class OneHotEncodingTest extends AbstractFilterTest {
+  public OneHotEncodingTest(String name) {
     super(name);
   }
 
@@ -44,22 +44,22 @@ public class SlidingWindowTest extends AbstractFilterTest {
     Instances data = new Instances("TestData", attrs, 0);
     double vals[] = new double[3];
     vals[0] = 0;
-    vals[1] = data.attribute(1).addStringValue("YTAVW");
+    vals[1] = data.attribute(1).addStringValue("ACDEF");
     vals[2] = 1;
     data.add(new DenseInstance(1.0, vals));
     vals = new double[3];
     vals[0] = 1;
-    vals[1] = data.attribute(1).addStringValue("AAAAAAAAYYY");
+    vals[1] = data.attribute(1).addStringValue("STVWY");
     vals[2] = 0;
     data.add(new DenseInstance(1.0, vals));
     m_Instances = data;
 
-		((SlidingWindow) m_Filter).setAttributeIndex("2");
+		((OneHotEncoding) m_Filter).setAttributeIndex("2");
 	}
 
   @Override
   public Filter getFilter() {
-    SlidingWindow filter = new SlidingWindow();
+    OneHotEncoding filter = new OneHotEncoding();
     return filter;
   }
 
@@ -72,17 +72,8 @@ public class SlidingWindowTest extends AbstractFilterTest {
     assertEquals(result.get(10).toString(1), "AYY");
   }
 
-  public void testBigWindow() {
-    ((SlidingWindow) m_Filter).setWindowWidth("6");
-    Instances result = useFilter();
-    assertEquals(6, result.numInstances());
-    assertEquals(m_Instances.numAttributes(), result.numAttributes());
-    assertEquals("AAAAAA", result.get(0).toString(1));
-    assertEquals("AAAYYY", result.get(5).toString(1));
-  }
-
   public static Test suite() {
-    return new TestSuite(SlidingWindowTest.class);
+    return new TestSuite(OneHotEncodingTest.class);
   }
 
   public static void main(String[] args) {

@@ -18,6 +18,7 @@ import weka.filters.SimpleBatchFilter;
 import weka.core.Utils;
 
 /**
+ * FIXME!!!
  * <!-- globalinfo-start --> Counts the amino acids in a protein sequence. 
  * Optionally scales counts to unit sum.
  * <p>
@@ -38,56 +39,12 @@ import weka.core.Utils;
  * @author danielhogan
  * @version $Revision$
  */
-public class SlidingWindow extends ProteinFilter {
+public class OneHotEncoding extends ProteinFilter {
   private static final long serialVersionUID = 1L;
-
-  protected int windowWidth = 3;
-
-  @OptionMetadata(displayName = "Window width", description = "Width of the sliding window.", 
-      commandLineParamName = "W", commandLineParamSynopsis = "-W <width>", displayOrder = 1)
-  public int getWindowWidth() {
-    return windowWidth;
-  }
-
-  public void setWindowWidth(String arg) {
-    windowWidth = Integer.parseInt(arg);
-  }
-
-  @Override
-  public Enumeration<Option> listOptions() {
-    Vector<Option> options = new Vector<Option>();
-    options.add(new Option(
-          "\tSet the width of the sliding window.", "W", 1, 
-          "-W <width>"
-          ));
-    options.addAll(Collections.list(super.listOptions()));
-    return options.elements();
-  }
-
-  @Override
-  public String[] getOptions() {
-    Vector<String> options = new Vector<String>();
-    options.add("-W");
-    options.add("" + getWindowWidth());
-    Collections.addAll(options, super.getOptions());
-    return options.toArray(new String[options.size()]);
-  }
-
-  @Override
-  public void setOptions(String[] options) throws Exception {
-    String arg = Utils.getOption('W', options);
-    if (arg.length() != 0) {
-      setWindowWidth(arg);
-    } else {
-      setWindowWidth("3");
-    }
-    super.setOptions(options);
-    Utils.checkForRemainingOptions(options);
-  }
 
   @Override
   public String globalInfo() {
-    return "A sliding window filter.";
+    return "A one-hot encoding filter.";
   }
 
   @Override
@@ -96,6 +53,14 @@ public class SlidingWindow extends ProteinFilter {
     int seqAttrIndex = attrIndex.getIndex();
     if (!inputFormat.attribute(seqAttrIndex).isString()) {
       throw new Exception("Specified attribute index (" + seqAttrIndex + ") must be string type.");
+    }
+    strLength = -1;
+    seqAttribute = inputFormat.attribute(seqAttrIndex);
+    for (int i = 0; i < seqAttribute.numValues(); i++) {
+      if (strLength < 0) { strLength = seqAttribute.value(i).length }
+      if (seqAttribute.value(i).length != strLength) {
+        throw new Exception("All strings must have the same length.");
+      }
     }
     return inputFormat;
   }
