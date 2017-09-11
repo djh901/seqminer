@@ -18,9 +18,7 @@ import weka.filters.SimpleBatchFilter;
 import weka.core.Utils;
 
 /**
- * FIXME!!!
- * <!-- globalinfo-start --> Counts the amino acids in a protein sequence. 
- * Optionally scales counts to unit sum.
+ * <!-- globalinfo-start --> Represents fixed-length sequences as sequences of vectors from BLOSUM62.
  * <p>
  * <!-- globalinfo-end -->
  * 
@@ -39,17 +37,40 @@ import weka.core.Utils;
  * @author danielhogan
  * @version $Revision$
  */
-public class OneHotEncoding extends ProteinFilter {
+public class BLOSUMEncoding extends ProteinFilter {
   private static final long serialVersionUID = 1L;
 
-  public static final double[] BLOSUM62 = {
-  }
+  public static final char[] bases = { 'A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V', 'B', 'Z', 'X', '*' };
+  public static final double[] BLOSUM62 = {{ 4, -1, -2, -2,  0, -1, -1,  0, -2, -1, -1, -1, -1, -2, -1,  1,  0, -3, -2,  0, -2, -1,  0, -4 },
+    { -1,  5,  0, -2, -3,  1,  0, -2,  0, -3, -2,  2, -1, -3, -2, -1, -1, -3, -2, -3, -1,  0, -1, -4 },
+    { -2,  0,  6,  1, -3,  0,  0,  0,  1, -3, -3,  0, -2, -3, -2,  1,  0, -4, -2, -3,  3,  0, -1, -4 },
+    { -2, -2,  1,  6, -3,  0,  2, -1, -1, -3, -4, -1, -3, -3, -1,  0, -1, -4, -3, -3,  4,  1, -1, -4 },
+    { 0, -3, -3, -3,  9, -3, -4, -3, -3, -1, -1, -3, -1, -2, -3, -1, -1, -2, -2, -1, -3, -3, -2, -4 },
+    { -1,  1,  0,  0, -3,  5,  2, -2,  0, -3, -2,  1,  0, -3, -1,  0, -1, -2, -1, -2,  0,  3, -1, -4 },
+    { -1,  0,  0,  2, -4,  2,  5, -2,  0, -3, -3,  1, -2, -3, -1,  0, -1, -3, -2, -2,  1,  4, -1, -4 },
+    { 0, -2,  0, -1, -3, -2, -2,  6, -2, -4, -4, -2, -3, -3, -2,  0, -2, -2, -3, -3, -1, -2, -1, -4 },
+    { -2,  0,  1, -1, -3,  0,  0, -2,  8, -3, -3, -1, -2, -1, -2, -1, -2, -2,  2, -3,  0,  0, -1, -4 },
+    { -1, -3, -3, -3, -1, -3, -3, -4, -3,  4,  2, -3,  1,  0, -3, -2, -1, -3, -1,  3, -3, -3, -1, -4 },
+    { -1, -2, -3, -4, -1, -2, -3, -4, -3,  2,  4, -2,  2,  0, -3, -2, -1, -2, -1,  1, -4, -3, -1, -4 },
+    { -1,  2,  0, -1, -3,  1,  1, -2, -1, -3, -2,  5, -1, -3, -1,  0, -1, -3, -2, -2,  0,  1, -1, -4 },
+    { -1, -1, -2, -3, -1,  0, -2, -3, -2,  1,  2, -1,  5,  0, -2, -1, -1, -1, -1,  1, -3, -1, -1, -4 },
+    { -2, -3, -3, -3, -2, -3, -3, -3, -1,  0,  0, -3,  0,  6, -4, -2, -2,  1,  3, -1, -3, -3, -1, -4 },
+    { -1, -2, -2, -1, -3, -1, -1, -2, -2, -3, -3, -1, -2, -4,  7, -1, -1, -4, -3, -2, -2, -1, -2, -4 },
+    { 1, -1,  1,  0, -1,  0,  0,  0, -1, -2, -2,  0, -1, -2, -1,  4,  1, -3, -2, -2,  0,  0,  0, -4 },
+    { 0, -1,  0, -1, -1, -1, -1, -2, -2, -1, -1, -1, -1, -2, -1,  1,  5, -2, -2,  0, -1, -1,  0, -4 },
+    { -3, -3, -4, -4, -2, -2, -3, -2, -2, -3, -2, -3, -1,  1, -4, -3, -2, 11,  2, -3, -4, -3, -2, -4 },
+    { -2, -2, -2, -3, -2, -1, -2, -3,  2, -1, -1, -2, -1,  3, -3, -2, -2,  2,  7, -1, -3, -2, -1, -4 },
+    { 0, -3, -3, -3, -1, -2, -2, -3, -3,  3,  1, -2,  1, -1, -2, -2,  0, -3, -1,  4, -3, -2, -1, -4 },
+    { -2, -1,  3,  4, -3,  0,  1, -1,  0, -3, -4,  0, -3, -3, -2,  0, -1, -4, -3, -3,  4,  1, -1, -4 },
+    { -1,  0,  0,  1, -3,  3,  4, -2,  0, -3, -3,  1, -1, -3, -1,  0, -1, -3, -2, -2,  1,  4, -1, -4 },
+    { 0, -1, -1, -1, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -2,  0,  0, -2, -1, -1, -1, -1, -1, -4 },
+    { -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4,  1 }};
 
   protected int stringLength = -1;
 
   @Override
   public String globalInfo() {
-    return "A one-hot encoding filter.";
+    return "A BLOSUM62 encoding filter.";
   }
 
   @Override
@@ -71,6 +92,7 @@ public class OneHotEncoding extends ProteinFilter {
     Instances outputFormat = new Instances(inputFormat, 0);
     for (int i = 0; i < stringLength; i++) {
       for (int j = 0; j < 20; j++) {
+        // TODO: create 
         outputFormat.insertAttributeAt(new Attribute(Integer.toString(20 * i + j)), outputFormat.numAttributes());
       }
     }
@@ -93,13 +115,11 @@ public class OneHotEncoding extends ProteinFilter {
         }
       }
       for (int pos = 0; pos < sequence.length(); pos++) {
-        for (int baseIdx = 0; baseIdx < 20; baseIdx++) {
-          if (sequence.charAt(pos) == AminoAcidFilter.bases[baseIdx]) {
-             vals[instances.numAttributes() + ((20 * pos) + baseIdx)] = 1;
-          } else {
-             vals[instances.numAttributes() + ((20 * pos) + baseIdx)] = 0; 
-          }
+        int baseIdx = 0;
+        while (bases[baseIdx] != sequence.charAt(pos)) { 
+          baseIdx++; 
         }
+        System.arraycopy(blosum62[baseIdx], 0, vals, (20 * pos), 20);
       }
       Instance obj = new DenseInstance(1.0, vals);
       output.add(new DenseInstance(1.0, vals));

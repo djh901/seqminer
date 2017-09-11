@@ -14,8 +14,8 @@ import weka.core.TestInstances;
 import weka.filters.AbstractFilterTest;
 import weka.filters.Filter;
 
-public class OneHotEncodingTest extends AbstractFilterTest {
-  public OneHotEncodingTest(String name) {
+public class BLOSUMEncodingTest extends AbstractFilterTest {
+  public BLOSUMEncodingTest(String name) {
     super(name);
   }
 
