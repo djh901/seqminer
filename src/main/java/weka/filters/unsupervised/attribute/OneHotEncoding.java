@@ -18,9 +18,7 @@ import weka.filters.SimpleBatchFilter;
 import weka.core.Utils;
 
 /**
- * FIXME!!!
- * <!-- globalinfo-start --> Counts the amino acids in a protein sequence. 
- * Optionally scales counts to unit sum.
+ * <!-- globalinfo-start --> Represents fixed-length sequences using one-hot encoding.
  * <p>
  * <!-- globalinfo-end -->
  * 
