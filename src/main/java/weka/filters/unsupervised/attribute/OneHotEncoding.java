@@ -27,11 +27,6 @@ import weka.core.Utils;
  * -R &lt;index&gt;
  *  Sets the index of the string attribute.
  * </pre>
- * 
- * <pre>
- * -S
- *  Scales counts to sum to unity.
- * </pre>
  * <!-- options-end -->
  * 
  * @author danielhogan

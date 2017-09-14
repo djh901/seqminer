@@ -27,11 +27,6 @@ import weka.core.Utils;
  * -R &lt;index&gt;
  *  Sets the index of the string attribute.
  * </pre>
- * 
- * <pre>
- * -S
- *  Scales counts to sum to unity.
- * </pre>
  * <!-- options-end -->
  * 
  * @author danielhogan
@@ -41,7 +36,7 @@ public class BLOSUMEncoding extends ProteinFilter {
   private static final long serialVersionUID = 1L;
 
   public static final char[] bases = { 'A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V', 'B', 'Z', 'X', '*' };
-  public static final double[] BLOSUM62 = {{ 4, -1, -2, -2,  0, -1, -1,  0, -2, -1, -1, -1, -1, -2, -1,  1,  0, -3, -2,  0, -2, -1,  0, -4 },
+  public static final double[][] blosum62 = {{ 4, -1, -2, -2,  0, -1, -1,  0, -2, -1, -1, -1, -1, -2, -1,  1,  0, -3, -2,  0, -2, -1,  0, -4 },
     { -1,  5,  0, -2, -3,  1,  0, -2,  0, -3, -2,  2, -1, -3, -2, -1, -1, -3, -2, -3, -1,  0, -1, -4 },
     { -2,  0,  6,  1, -3,  0,  0,  0,  1, -3, -3,  0, -2, -3, -2,  1,  0, -4, -2, -3,  3,  0, -1, -4 },
     { -2, -2,  1,  6, -3,  0,  2, -1, -1, -3, -4, -1, -3, -3, -1,  0, -1, -4, -3, -3,  4,  1, -1, -4 },
@@ -92,7 +87,7 @@ public class BLOSUMEncoding extends ProteinFilter {
     Instances outputFormat = new Instances(inputFormat, 0);
     for (int i = 0; i < stringLength; i++) {
       for (int j = 0; j < 20; j++) {
-        // TODO: create 
+        // TODO: give informative names to columns
         outputFormat.insertAttributeAt(new Attribute(Integer.toString(20 * i + j)), outputFormat.numAttributes());
       }
     }
@@ -102,9 +97,9 @@ public class BLOSUMEncoding extends ProteinFilter {
   @Override
   protected Instances process(Instances instances) throws Exception {
     Instances output = prepareOutputFormat(instances);
-    double[] vals = new double[output.numAttributes()];
 
     for (int i = 0; i < instances.numInstances(); i++) {
+      double[] vals = new double[output.numAttributes()]; // TODO: also change for OneHotEncoding
       String sequence = instances.get(i).toString(attrIndex.getIndex());
       for (int j = 0; j < instances.numAttributes(); j++) {
         if (instances.attribute(j).isString()) {
@@ -116,16 +111,17 @@ public class BLOSUMEncoding extends ProteinFilter {
       }
       for (int pos = 0; pos < sequence.length(); pos++) {
         int baseIdx = 0;
-        while (bases[baseIdx] != sequence.charAt(pos)) { 
-          baseIdx++; 
+        for (; bases[baseIdx] != sequence.charAt(pos); baseIdx++) {
+          // System.out.println("Does " + bases[baseIdx] + " equal " + sequence.charAt(pos) + "?");
         }
-        System.arraycopy(blosum62[baseIdx], 0, vals, (20 * pos), 20);
+        assert baseIdx <= 20 : "Base index must be less than 20. Sequence base is " 
+          + sequence.charAt(pos) + "; base index points to " + bases[baseIdx];
+        System.arraycopy(blosum62[baseIdx], 0, vals, instances.numAttributes() + (20 * pos), 20);
       }
-      Instance obj = new DenseInstance(1.0, vals);
       output.add(new DenseInstance(1.0, vals));
-      vals = new double[output.numAttributes()];
     }
 
+    System.err.println(output.toString());
     return output;
   }
 }

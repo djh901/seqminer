@@ -69,7 +69,8 @@ public abstract class ProteinFilter extends SimpleBatchFilter {
 	}
 
 	abstract protected Instances prepareOutputFormat(Instances instances) throws Exception; 
-	@Override
+
+	@Override // TODO: is this method deprecated by prepareOutputFormat
 	protected Instances determineOutputFormat(Instances instances) throws Exception {
 		attrIndex.setUpper(instances.numAttributes() - 1);
 

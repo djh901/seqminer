@@ -21,7 +21,7 @@ public class BLOSUMEncodingTest extends AbstractFilterTest {
 
   @Override
   protected FilteredClassifier getFilteredClassifier() {
-    return null;
+    return null; // disable filtered classifier tests
   }
 
 	@Override
@@ -54,12 +54,12 @@ public class BLOSUMEncodingTest extends AbstractFilterTest {
     data.add(new DenseInstance(1.0, vals));
     m_Instances = data;
 
-    ((OneHotEncoding) m_Filter).setAttributeIndex("2");
+    ((BLOSUMEncoding) m_Filter).setAttributeIndex("2");
   }
 
   @Override
   public Filter getFilter() {
-    OneHotEncoding filter = new OneHotEncoding();
+    BLOSUMEncoding filter = new BLOSUMEncoding();
     return filter;
   }
 
@@ -67,16 +67,16 @@ public class BLOSUMEncodingTest extends AbstractFilterTest {
     Instances result = useFilter();
     assertEquals(result.numInstances(), 2);
     assertEquals(result.numAttributes(), 103);
-    assertEquals(1.0, result.get(0).value(3));
-    assertEquals(0.0, result.get(0).value(4));
-    assertEquals(1.0, result.get(1).value(102));
-    assertEquals(1.0, result.get(1).value(81));
-    assertEquals(0.0, result.get(1).value(80));
-    assertEquals(0.0, result.get(1).value(82));
+    assertEquals(4.0, result.get(0).value(3));
+    assertEquals(-1.0, result.get(0).value(4));
+    assertEquals(-1.0, result.get(1).value(102));
+    assertEquals(2.0, result.get(1).value(81));
+    assertEquals(11.0, result.get(1).value(80));
+    assertEquals(-3.0, result.get(1).value(82));
   }
 
   public static Test suite() {
-    return new TestSuite(OneHotEncodingTest.class);
+    return new TestSuite(BLOSUMEncodingTest.class);
   }
 
   public static void main(String[] args) {
