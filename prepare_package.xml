@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="seqminer.makejar" default="makezip" basedir=".">
-	<target name="makejar" description="Create a jar for the seqminer project.">
-		<jar jarfile="seqminer.jar" includes="src"/>
-	</target>
-	<target name="makezip" depends="makejar" description="Create a zip file for importing into Weka.">
-		<zip destfile="seqminer.zip" basedir="." includes="src,Description.props,build_package.xml"/>
-	</target>
-</project>
