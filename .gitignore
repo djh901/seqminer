@@ -1,2 +1,6 @@
 /.gradle/
 /build/
+/wekarefs/
+/build.log
+/bin/
+/.settings/
