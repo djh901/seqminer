@@ -15,7 +15,7 @@ repositories {
 sourceSets {
     external {
         java {
-            srcDirs = [ 'weka-src/test/java' ]
+            srcDirs = [ 'wekasrc/test/java' ]
             includes = [ 'weka/filters/AbstractFilterTest.java', 'weka/test/Regression.java' ]
         }
     }
@@ -25,7 +25,7 @@ sourceSets {
             srcDirs = [ 'src' ]
         }
         resources {
-            srcDirs = [ 'weka-src/test/java' ]
+            srcDirs = [ 'wekasrc/test/java' ]
             includes = ['**/*.arff']
         }
         compileClasspath += external.output
